@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
 namespace Full_GRASP_And_SOLID
 {
@@ -26,11 +27,18 @@ namespace Full_GRASP_And_SOLID
             recipe.AddStep(GetProduct("Leche"), 200, GetEquipment("Hervidor"), 60);
             recipe.AddStep("Dejar enfriar", 60);
 
+            // tiempo que demora en cocinar.
+            Console.WriteLine(recipe.GetCookTime());
+
             IPrinter printer;
             printer = new ConsolePrinter();
             printer.PrintRecipe(recipe);
             printer = new FilePrinter();
             printer.PrintRecipe(recipe);
+
+            recipe.Cook();
+            Thread.Sleep(500); // 0.5 segundos
+            Console.WriteLine($"Cooked: {recipe.Cooked}");
         }
 
         private static void PopulateCatalogs()
